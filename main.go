@@ -9,14 +9,6 @@ import(
 	pal "github.com/abusomani/go-palette/palette"
 )
 
-// p := [][]int {
-	// 	{1},
-	// 	{1, 2},
-	// 	{1, 2, 3},
-	// 	{1, 2, 3, 4},
-	// 	{1, 2, 3, 4, 5},
-	// }
-
 func main() {
 
 	ers := []string{"good jump", "jump out of line", "space occupied", "need to jump a piece"}
@@ -29,7 +21,7 @@ func main() {
 		{"*", " *", " *", " *", " *"},
 	}
 
-	var fromI, fromJ, toI, toJ int
+	var from, to int
 
 	ps := setPuzzle(p)
 
@@ -43,11 +35,12 @@ func main() {
 			}
 
 			fmt.Println("Enter a move:")
-			fmt.Scanf("%d%d%d%d", &fromI, &fromJ, &toI, &toJ)
-			if fromI == -1 {
+			fmt.Scanf("%d%d", &from, &to)
+			if from == -1 {
 				break eternalLoop
 			}
-			ps2, msg := jumpPiece(ps, fromI, fromJ, toI, toJ)
+			
+			ps2, msg := jumpPiece(ps, from, to)
 			if msg != 0 {
 				fmt.Println(ers[msg])
 			}
@@ -130,9 +123,57 @@ func setPuzzle(p[][]string) [][]string{
 	}
 
 	return p
+} 
+
+func convertJump(n int) (int, int) {
+	var n1, n2 int
+	// p := [][]int {
+	// 	{1},
+	// 	{2, 3},
+	// 	{4, 5, 6},
+	// 	{7, 8, 9, 10},
+	// 	{11, 12, 13, 14, 15},
+	// }
+	switch n {
+	case 1:
+		n1, n2 = 0, 0
+	case 2:
+		n1, n2 = 1, 0
+	case 3:
+		n1, n2 = 1, 1
+	case 4:
+		n1, n2 = 2, 0
+	case 5:
+		n1, n2 = 2, 1
+	case 6:
+		n1, n2 = 2, 2
+	case 7:
+		n1, n2 = 3, 0
+	case 8:
+		n1, n2 = 3, 1
+	case 9:
+		n1, n2 = 3, 2
+	case 10:
+		n1, n2 = 3, 3
+	case 11:
+		n1, n2 = 4, 0
+	case 12:
+		n1, n2 = 4, 1
+	case 13:
+		n1, n2 = 4, 2
+	case 14:
+		n1, n2 = 4, 3
+	case 15:
+		n1, n2 = 4, 4
+	}
+
+	return n1, n2
 }
 
-func jumpPiece(p[][]string, fromI int, fromJ int, toI int, toJ int) ([][]string, int) {
+func jumpPiece(p[][]string, from int, to int) ([][]string, int) {
+	var fromI, fromJ, toI, toJ int
+	fromI, fromJ = convertJump(from)
+	toI, toJ = convertJump(to)
 	var jumpI int = fromI - toI
 	var jumpJ int = fromJ - toJ
 	var chkI, chkJ int
