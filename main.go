@@ -21,6 +21,14 @@ func main() {
 		{"*", " *", " *", " *", " *"},
 	}
 
+	// p := [][]string {
+	// 	{"       1"},
+	// 	{"      2", " 3"},
+	// 	{"     4", " 5", " 6"},
+	// 	{"   7", " 8", " 9", " 10"},
+	// 	{"11", " 12", " 13", " 14", " 15"},
+	// }
+
 	var from, to int
 
 	ps := setPuzzle(p)
@@ -128,10 +136,10 @@ func setPuzzle(p[][]string) [][]string{
 func convertJump(n int) (int, int) {
 	var n1, n2 int
 	// p := [][]int {
-	// 	{1},
-	// 	{2, 3},
-	// 	{4, 5, 6},
-	// 	{7, 8, 9, 10},
+	// 	{      1},
+	// 	{     2, 3},
+	// 	{    4, 5, 6},
+	// 	{  7, 8, 9, 10},
 	// 	{11, 12, 13, 14, 15},
 	// }
 	switch n {
@@ -188,8 +196,13 @@ func jumpPiece(p[][]string, from int, to int) ([][]string, int) {
 		}
 	} else if fromI > toI {
 		chkI = fromI - 1
+		//chkJ = toJ
 		if jumpJ == 0 {
-			chkJ = jumpJ
+			if fromJ == 0 && toJ == 0 {
+				chkJ = jumpJ
+			} else {
+				chkJ = toJ
+			}
 		} else {
 			chkJ = fromJ - 1
 		}
